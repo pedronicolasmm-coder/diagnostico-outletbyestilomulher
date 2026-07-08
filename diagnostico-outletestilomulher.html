@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico — Outlet by Estilo Mulher</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+
+:root{
+  --bg:#0a0608;
+  --bg2:#110d10;
+  --rose:#e8a0b0;
+  --rose-dim:rgba(232,160,176,0.15);
+  --rose-mid:rgba(232,160,176,0.35);
+  --lilac:#c8a8d8;
+  --text:#f0e8f0;
+  --text-soft:rgba(240,232,240,0.55);
+  --text-muted:rgba(240,232,240,0.25);
+  --border:rgba(240,232,240,0.07);
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* FLOATING ICONS CANVAS */
+#canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+}
+
+.float-icon{
+  position:absolute;
+  font-size:22px;
+  opacity:0;
+  animation:floatUp linear infinite;
+  user-select:none;
+  pointer-events:none;
+  filter:blur(0px);
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(110vh) rotate(0deg) scale(0.7);opacity:0;}
+  8%{opacity:0.18;}
+  90%{opacity:0.12;}
+  100%{transform:translateY(-12vh) rotate(360deg) scale(1.1);opacity:0;}
+}
+
+/* LAYOUT */
+.wrap{position:relative;z-index:1;}
+
+/* HERO */
+.hero{
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px 24px 60px;
+  position:relative;
+}
+
+.hero::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(232,160,176,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--rose);
+  border:1px solid var(--rose-mid);
+  padding:6px 16px;
+  border-radius:40px;
+  margin-bottom:32px;
+}
+
+.tag::before{
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--rose);
+  animation:pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:0.4;transform:scale(0.7);}
+}
+
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(38px,7vw,80px);
+  font-weight:300;
+  line-height:1.1;
+  color:var(--text);
+  margin-bottom:24px;
+  max-width:820px;
+}
+
+.hero h1 em{
+  font-style:italic;
+  color:var(--rose);
+}
+
+.hero .sub{
+  font-size:15px;
+  color:var(--text-soft);
+  max-width:440px;
+  line-height:1.8;
+  margin-bottom:56px;
+}
+
+/* BIG STATS */
+.stats{
+  display:flex;
+  gap:0;
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  width:100%;
+  max-width:600px;
+}
+
+.stat{
+  flex:1;
+  padding:28px 16px;
+  text-align:center;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+
+.stat:last-child{border-right:none;}
+
+.stat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,5vw,48px);
+  font-weight:600;
+  line-height:1;
+  margin-bottom:6px;
+}
+
+.stat-n.bad{color:#e06080;}
+.stat-n.ok{color:var(--rose);}
+.stat-n.warn{color:#d08040;}
+
+.stat-l{
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+
+/* SCROLL INDICATOR */
+.scroll-hint{
+  margin-top:48px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  color:var(--text-muted);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  animation:fadeInUp 1s 1.5s both;
+}
+
+.scroll-line{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,var(--rose),transparent);
+  animation:scrollDown 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollDown{
+  0%{transform:scaleY(0);transform-origin:top;}
+  50%{transform:scaleY(1);transform-origin:top;}
+  51%{transform:scaleY(1);transform-origin:bottom;}
+  100%{transform:scaleY(0);transform-origin:bottom;}
+}
+
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* PROBLEMS SECTION */
+.section{
+  max-width:900px;
+  margin:0 auto;
+  padding:80px 24px;
+}
+
+.sec-label{
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--rose);
+  margin-bottom:16px;
+  text-align:center;
+}
+
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,4vw,48px);
+  font-weight:300;
+  text-align:center;
+  margin-bottom:56px;
+  line-height:1.2;
+}
+
+.sec-title em{font-style:italic;color:var(--rose);}
+
+/* PROBLEM LIST */
+.prob-list{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.prob{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:28px 32px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:24px;
+  cursor:default;
+  transition:border-color 0.25s,background 0.25s;
+  margin-bottom:2px;
+}
+
+.prob:hover{
+  border-color:var(--rose-mid);
+  background:rgba(232,160,176,0.04);
+}
+
+.prob-icon{font-size:28px;line-height:1;}
+
+.prob-text{}
+.prob-name{
+  font-size:15px;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.prob-desc{
+  font-size:13px;
+  color:var(--text-soft);
+  line-height:1.6;
+}
+
+.prob-badge{
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:4px 10px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+
+.badge-crit{background:rgba(224,96,128,0.12);color:#e06080;border:1px solid rgba(224,96,128,0.2);}
+.badge-med{background:rgba(208,128,64,0.12);color:#d08040;border:1px solid rgba(208,128,64,0.2);}
+
+/* INSIGHT FULL-WIDTH */
+.insight-band{
+  background:linear-gradient(135deg,rgba(232,160,176,0.08) 0%,rgba(200,168,216,0.05) 100%);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:72px 24px;
+  text-align:center;
+}
+
+.insight-band .big{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,4vw,42px);
+  font-weight:300;
+  font-style:italic;
+  color:var(--text);
+  max-width:700px;
+  margin:0 auto 16px;
+  line-height:1.3;
+}
+
+.insight-band .big span{color:var(--rose);}
+
+.insight-band .small{
+  font-size:13px;
+  color:var(--text-soft);
+  max-width:440px;
+  margin:0 auto;
+}
+
+/* OPPORTUNITIES */
+.opp-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.opp{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px 28px;
+  transition:border-color 0.25s;
+}
+
+.opp:hover{border-color:var(--rose-mid);}
+
+.opp-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.opp-ic{font-size:26px;}
+
+.opp-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  font-weight:600;
+  color:var(--text);
+}
+
+.opp-desc{
+  font-size:13px;
+  color:var(--text-soft);
+  line-height:1.7;
+}
+
+/* CTA */
+.cta-section{
+  padding:100px 24px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.cta-section::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(232,160,176,0.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+.cta-section h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,5vw,60px);
+  font-weight:300;
+  margin-bottom:20px;
+  line-height:1.15;
+}
+
+.cta-section h2 em{font-style:italic;color:var(--rose);}
+
+.cta-section p{
+  font-size:14px;
+  color:var(--text-soft);
+  max-width:380px;
+  margin:0 auto 40px;
+  line-height:1.8;
+}
+
+.btn{
+  display:inline-block;
+  padding:16px 44px;
+  background:var(--rose);
+  color:#0a0608;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  text-decoration:none;
+  border-radius:40px;
+  transition:opacity 0.2s,transform 0.2s;
+}
+
+.btn:hover{opacity:0.85;transform:translateY(-2px);}
+
+.handle{
+  font-size:12px;
+  color:var(--text-muted);
+  margin-top:20px;
+  letter-spacing:0.08em;
+}
+
+/* FOOTER */
+footer{
+  padding:20px 24px;
+  text-align:center;
+  border-top:1px solid var(--border);
+  font-size:11px;
+  color:var(--text-muted);
+  letter-spacing:0.05em;
+}
+
+/* REVEAL */
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:600px){
+  .stats{flex-direction:column;}
+  .stat{border-right:none;border-bottom:1px solid var(--border);}
+  .prob{grid-template-columns:auto 1fr;gap:16px;}
+  .prob-badge{display:none;}
+  .opp-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="canvas"></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="tag">Diagnóstico Instagram 2026</div>
+    <h1>Outlet by Estilo Mulher<br><em>tem 35,8 mil seguidores.</em><br>O engajamento conta outra história.</h1>
+    <p class="sub">Preparado exclusivamente para @outletbyestilomulher com base na análise do perfil e dos dados públicos disponíveis.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <p class="stat-n ok">35,8k</p>
+        <p class="stat-l">Seguidores</p>
+      </div>
+      <div class="stat">
+        <p class="stat-n bad">~20</p>
+        <p class="stat-l">Curtidas/post</p>
+      </div>
+      <div class="stat">
+        <p class="stat-n bad">0,05%</p>
+        <p class="stat-l">Engajamento</p>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Ver diagnóstico
+    </div>
+  </section>
+
+  <!-- PROBLEMS -->
+  <section class="section">
+    <p class="sec-label">O que foi identificado</p>
+    <h2 class="sec-title">5 gargalos que travam<br><em>o crescimento</em></h2>
+
+    <div class="prob-list">
+      <div class="prob reveal">
+        <div class="prob-icon">📦</div>
+        <div class="prob-text">
+          <p class="prob-name">Grid dominado por fotos de produto</p>
+          <p class="prob-desc">Foto de peça no cabide não gera identificação. Gera catálogo. O algoritmo entrega menos esse formato.</p>
+        </div>
+        <span class="prob-badge badge-crit">Crítico</span>
+      </div>
+
+      <div class="prob reveal">
+        <div class="prob-icon">🎬</div>
+        <div class="prob-text">
+          <p class="prob-name">Reels com pessoas reais não são replicados</p>
+          <p class="prob-desc">O reel do Dia dos Namorados atingiu 85 curtidas, 4x a média. Esse formato aparece uma vez. Não virou estratégia.</p>
+        </div>
+        <span class="prob-badge badge-crit">Crítico</span>
+      </div>
+
+      <div class="prob reveal">
+        <div class="prob-icon">📣</div>
+        <div class="prob-text">
+          <p class="prob-name">Nenhum anúncio ativo no Meta Ads</p>
+          <p class="prob-desc">Sem tráfego pago, cada post depende 100% do alcance orgânico. Isso não escala para uma loja que vende para todo o Brasil.</p>
+        </div>
+        <span class="prob-badge badge-crit">Crítico</span>
+      </div>
+
+      <div class="prob reveal">
+        <div class="prob-icon">🔍</div>
+        <div class="prob-text">
+          <p class="prob-name">Ausência de conteúdo de descoberta</p>
+          <p class="prob-desc">Quase todo post fala para quem já conhece a marca. Sem conteúdo para atrair pessoas novas, a base para de crescer.</p>
+        </div>
+        <span class="prob-badge badge-med">Médio</span>
+      </div>
+
+      <div class="prob reveal">
+        <div class="prob-icon">📊</div>
+        <div class="prob-text">
+          <p class="prob-name">Engajamento 20x abaixo do mercado</p>
+          <p class="prob-desc">A média do mercado de moda é 1% a 3%. O perfil está em 0,05%, o que indica que o alcance orgânico já está suprimido pelo algoritmo.</p>
+        </div>
+        <span class="prob-badge badge-crit">Crítico</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHT -->
+  <div class="insight-band reveal">
+    <p class="big">"O conteúdo que <span>humaniza</span> performa 4x mais.<br>O restante do grid ignora esse dado."</p>
+    <p class="small">Um reel com pessoa real, humor e contexto narrativo atingiu 85 curtidas. A média geral é 20. O padrão existe. Falta replicar.</p>
+  </div>
+
+  <!-- OPPORTUNITIES -->
+  <section class="section">
+    <p class="sec-label">O que pode mudar</p>
+    <h2 class="sec-title">Oportunidades <em>identificadas</em></h2>
+
+    <div class="opp-grid">
+      <div class="opp reveal">
+        <div class="opp-top">
+          <span class="opp-ic">🎬</span>
+          <p class="opp-name">Reels com pessoas reais</p>
+        </div>
+        <p class="opp-desc">Transformar o formato que já provou funcionar em estratégia sistemática. Não eventual.</p>
+      </div>
+
+      <div class="opp reveal">
+        <div class="opp-top">
+          <span class="opp-ic">📣</span>
+          <p class="opp-name">Tráfego pago ativo</p>
+        </div>
+        <p class="opp-desc">Campanhas no Meta segmentadas para mulheres de 25 a 50 anos, moda, região Sul e Brasil inteiro.</p>
+      </div>
+
+      <div class="opp reveal">
+        <div class="opp-top">
+          <span class="opp-ic">📅</span>
+          <p class="opp-name">Calendário editorial</p>
+        </div>
+        <p class="opp-desc">Alternância estratégica entre produto, descoberta e relacionamento. Consistência gera alcance orgânico.</p>
+      </div>
+
+      <div class="opp reveal">
+        <div class="opp-top">
+          <span class="opp-ic">💬</span>
+          <p class="opp-name">Conversas no WhatsApp</p>
+        </div>
+        <p class="opp-desc">Transformar o Instagram em máquina de aquisição. Seguidora vira cliente, não só número.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Pronta para transformar<br><em>seguidor em cliente?</em></h2>
+    <p>Esse diagnóstico foi preparado especificamente para o Outlet by Estilo Mulher. Posso montar uma proposta completa.</p>
+    <a href="https://instagram.com/pedro_munaretto" class="btn" target="_blank">Falar com Pedro</a>
+    <p class="handle">@pedro_munaretto</p>
+  </section>
+
+  <footer>
+    Diagnóstico preparado por Pedro Munaretto · @pedro_munaretto · Outlet by Estilo Mulher 2026
+  </footer>
+
+</div>
+
+<script>
+// FLOATING ICONS
+const icons = ['👗','👠','👜','💄','🛍️','✨','👒','💅','🪡','🧣','👛','💎','🌸','🪞','👗','✂️','🧵','🕶️'];
+const canvas = document.getElementById('canvas');
+
+function spawnIcon(){
+  const el = document.createElement('div');
+  el.className = 'float-icon';
+  el.textContent = icons[Math.floor(Math.random()*icons.length)];
+  el.style.left = (Math.random()*100) + 'vw';
+  const dur = 12 + Math.random()*16;
+  const delay = Math.random()*8;
+  el.style.animation = `floatUp ${dur}s ${delay}s linear infinite`;
+  el.style.fontSize = (16 + Math.random()*18) + 'px';
+  canvas.appendChild(el);
+}
+
+for(let i=0;i<28;i++) spawnIcon();
+
+// REVEAL ON SCROLL
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'), i*80);
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.12});
+reveals.forEach(r=>io.observe(r));
+</script>
+</body>
+</html>
